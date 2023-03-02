@@ -1,0 +1,84 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block container %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="cart.html">Cart</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<!-- Cart Main Area Start -->
+<div class="cart-main-area pb-80 pb-sm-50">
+    <div class="container">
+        <h2 class="text-capitalize sub-heading">cart</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Form Start -->
+                <form action="#">
+                    <!-- Table Content Start -->
+                    <div class="table-content table-responsive mb-50">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="
+                                        {% if product.image %}
+                                            {{ product.image.url }}
+                                        {% else %}
+                                            {% static 'img/products/2.jpg' %}
+                                                {% endif %}">
+                                        </a>
+                                    </td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td><a href="{% url 'cart:cart_remove' product.id %}">Remove</a></td>
+                                    <td class="num">${{ item.price }}</td>
+                                    <td class="num">${{ item.total_price }}</td>
+                                </tr>
+                                {% endwith %}
+                            {% endfor %}
+                            <tr class="total">
+                                <td>Total</td>
+                                <td colspan="4"></td>
+                                <td class="num">${{ cart.get_total_price }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-right">
+                            <a href="{% url ' shop:product_list' %}" class="button light">Continue shopping</a>
+                            <a href="#" class="button">Checkout</a>
+                        </p>
+                        <!-- Row End -->
+                </form>
+                <!-- Form End -->
+            </div>
+        </div>
+        <!-- Row End -->
+    </div>
+</div>
+<!-- Cart Main Area End -->
+
+
+{% endblock container %}

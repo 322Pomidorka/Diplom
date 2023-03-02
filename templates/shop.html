@@ -1,0 +1,165 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block container %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="shop.html">Shop</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<!-- Shop Page Start -->
+<div class="main-shop-page pb-60">
+    <div class="container">
+        <!-- Row End -->
+        <div class="row">
+            <!-- Sidebar Shopping Option Start -->
+            <div class="col-lg-3  order-2">
+                <div class="sidebar white-bg">
+                    <form method="GET" action="{% url 'json_filter' %}" name="filter">
+                        <div class="single-sidebar">
+                            <div class="group-title">
+                                <h2>categories</h2>
+                            </div>
+                            <ul>
+                                {% for category in categories_list %}
+                                <li><input type="checkbox" name="category" value="{{category.id}}"> {{category.name}}
+                                </li>
+
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="single-sidebar">
+                            <div class="group-title">
+                                <h2>manufacturer</h2>
+                            </div>
+                            <ul class="manufactures-list">
+                                {% for brand in brands_list %}
+                                <li><input type="checkbox" name="brand" value="{{brand.id}}"> {{brand.name}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <button style="cursor:pointer;" type="submit">Найти</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Sidebar Shopping Option End -->
+            <!-- Product Categorie List Start -->
+            <div class="col-lg-9 order-lg-2">
+                <!-- Grid & List View Start -->
+                <div class="grid-list-top border-default universal-padding fix mb-30">
+                    <div class="grid-list-view f-left">
+                        <ul class="list-inline nav">
+                            <li><a data-toggle="tab" href="#grid-view"><i class="fa fa-th"></i></a></li>
+                            <li><a class="active" data-toggle="tab" href="#list-view"><i class="fa fa-list-ul"></i></a>
+                            </li>
+                            <li><span class="grid-item-list"> Items 1-12 of 13</span></li>
+                        </ul>
+                    </div>
+                    <!-- Toolbar Short Area Start -->
+                    <div class="main-toolbar-sorter f-right">
+                        <div class="toolbar-sorter">
+                            <label>sort by</label>
+                            <select class="sorter" name="sorter">
+                                <option value="Position" selected="selected">position</option>
+                                <option value="Product Name">Product Name</option>
+                                <option value="Price">Price</option>
+                            </select>
+                            <span><a href="#"><i class="fa fa-arrow-up"></i></a></span>
+                        </div>
+                    </div>
+                    <!-- Toolbar Short Area End -->
+                </div>
+                <!-- Grid & List View End -->
+                <div class="main-categorie">
+                    <!-- Grid & List Main Area End -->
+
+                    <div class="tab-content fix">
+
+                        <div id="list-view" class="tab-pane active">
+                            <!-- Single Product Start -->
+                            {% csrf_token %}
+                            {% for product in products_list %}
+                            <div class="single-product">
+                                <!-- Product Image Start -->
+                                <div class="pro-img">
+                                    <a href="product.html">
+                                        <img class="primary-img" src="{% static 'img/products/1.jpg' %}"
+                                             alt="single-product">
+                                        <img class="secondary-img" src="{% static 'img/products/2.jpg' %}"
+                                             alt="single-product">
+                                    </a>
+                                </div>
+                                <!-- Product Image End -->
+                                <!-- Product Content Start -->
+                                <div class="pro-content">
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <h4><a href="product.html">{{product.name}}</a></h4>
+                                    <p><span class="price">{{product.price}}</span>
+                                        <del class="prev-price">{{product.price}}</del>
+                                    </p>
+                                    <p>{{product.note}}</p>
+                                    <div class="pro-actions">
+                                        <div class="actions-secondary">
+                                            <a href="wishlist.html" data-toggle="tooltip" title="Add to Wishlist"><i
+                                                    class="fa fa-heart"></i></a>
+                                            <a href="{% url 'json_add_basket' %}"  name="basket" class="add-cart basket"
+                                               value="{{product.id}}">Add</a>
+                                            <a href="compare.html" data-toggle="tooltip" title="Add to Compare"><i
+                                                    class="fa fa-signal"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product Content End -->
+                            </div>
+                            {% endfor %}
+                            <!-- Single Product Start -->
+                        </div>
+
+                    </div>
+                    <!-- Grid & List Main Area End -->
+                </div>
+                <!--Breadcrumb and Page Show Start -->
+                <div class="pagination-box fix">
+                    <ul class="blog-pagination ">
+                        {% for i in page_range %}
+                            <li><a class="number-page" href="{{i}}" data-number="{{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                    <div class="toolbar-sorter-footer">
+                        <label>show</label>
+                        <select class="sorter" name="sorter">
+                            <option value="Position" selected="selected">12</option>
+                            <option value="Product Name">15</option>
+                            <option value="Price">30</option>
+                        </select>
+                        <span>per page</span>
+                    </div>
+                </div>
+                <!--Breadcrumb and Page Show End -->
+            </div>
+            <!-- product Categorie List End -->
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Shop Page End -->
+
+{% endblock container %}

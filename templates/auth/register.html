@@ -1,0 +1,49 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block container %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-area ptb-60 ptb-sm-30">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="register.html">Register</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Breadcrumb End -->
+<!-- Register Account Start -->
+<div class="register-account pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="register-title">
+                    <h3 class="mb-10">REGISTER ACCOUNT</h3>
+                    <p class="mb-10">If you already have an account with us, please login at the login page.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Row End -->
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post" action="{% url 'register' %}" >
+                    {% csrf_token %}
+
+                    {{ user_form }}
+
+                    <div class="buttons newsletter-input">
+                            <input type="submit" value="Continue" class="newsletter-btn">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Row End -->
+    </div>
+    <!-- Container End -->
+</div>
+<!-- Register Account End -->
+
+{% endblock container %}
